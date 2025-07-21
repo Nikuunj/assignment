@@ -1,6 +1,9 @@
+import Button from "@repo/ui/Button";
 
 export default function Page() {
     return (
-        <><div>1</div></>
+        <div>
+            <Button style={'outline'}/>
+        </div>
     );
 }
