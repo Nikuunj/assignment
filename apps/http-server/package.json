@@ -1,0 +1,26 @@
+{
+  "name": "http-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.ts",
+    "build": "tsc -b",
+    "dev": "npm run build && npm run start"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.3",
+    "bcrypt": "^6.0.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "express": "^5.1.0"
+  }
+}
