@@ -10,5 +10,5 @@ datasource db {
 
 model privateKey {
   pubkey      String         @id
-  pvtKey      String
+  pvtKey      Bytes
 }
