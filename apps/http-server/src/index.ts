@@ -1,4 +1,3 @@
-import { deriveSolAddress } from "./function/keygen";
 import express from 'express'
 import cors from 'cors';
 
