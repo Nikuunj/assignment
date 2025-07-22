@@ -4,7 +4,8 @@ import { prismaClient } from '@repo/db/client'
 import cors from 'cors';
 import { deriveAkashAddress, deriveSolAddress } from './function/keygen';
 import { authMiddleware } from './middleware/authMiddleware';
-import { createDeployment } from './function/createDeployment';
+import { createDeploymentWithKey } from './function/createDeployment';
+
 
 const app = express();
 
@@ -57,15 +58,18 @@ app.post('/createkey', authMiddleware, async (req: Request, res: Response) => {
      })
 })
 
-app.post("/create-deployment", async (req: Request, res: Response) => {
+app.post("/akash/create-deployment", async (req: Request, res: Response) => {
   try {
-    const { akashKeyName, akashAccountAddress } = req.body;
+    const { akashAccountAddress, publicKey } = req.body;
 
-    if (!akashKeyName || !akashAccountAddress) {
-      return res.status(400).json({ error: "akashKeyName and akashAccountAddress are required" });
+    if (!akashAccountAddress) {
+      return res.status(400).json({ error: "akashAccountAddress are required" });
     }
 
-    const result = await createDeployment(akashKeyName, akashAccountAddress);
+    
+
+               // give privatekey of account it make it by usnig combine 5 of 3 key
+    const result = await createDeploymentWithKey('');
     res.json(result);
   } catch (err: any) {
     res.status(500).json({ error: err.message || "Deployment failed" });
