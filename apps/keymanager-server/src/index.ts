@@ -1,6 +1,6 @@
 import { keyStore1, keyStore2, keyStore3, keyStore4, keyStore5 } from '@repo/keystore-db/client'
 import express, { Request, Response } from 'express'
-import { JWT_SECRET } from '@repo/backend-common/config'
+import { authMiddleware } from '@repo/backend-common/middleware'
 import cors from 'cors';
 
 const app = express();
@@ -10,10 +10,9 @@ app.use(cors({
 }));
 
 
-app.post('/createkey',(req: Request, res: Response) => {
-
+app.post('/createkey', authMiddleware, (req: Request, res: Response) => {
+     const userId = req.userId;
+     
 })
 
 app.listen(8080);
-
-console.log(JWT_SECRET);
