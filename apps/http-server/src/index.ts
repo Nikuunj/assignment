@@ -1,16 +1,82 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors';
 import { authMiddleware } from './middleware/authMiddleware';
+import { prismaClient } from '@repo/db/client';
 import axios from 'axios';
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '@repo/backend-common/config';
 
 const app = express();
 
 app.use(cors({
      origin: ['http:localhost:3000']
 }))
+app.use(express.json());
 
 app.post('/signup', async (req: Request, res: Response) => {
-     
+     const { email, password } = req.body;
+
+     try {
+
+          const hashPass = bcrypt.hashSync(password, 5);
+          prismaClient.user.create({
+               data: {
+                    email,
+                    password: hashPass
+               }
+          })
+
+          res.json({
+               msg: 'user create'
+          })
+     } catch(e) {
+          res.status(422).json({
+               msg: "user aleady exist"
+          })
+     }
+})
+
+app.post('/login', async (req: Request, res: Response) => {
+     const { email, password } = req.body;
+
+     try {
+          const user = await prismaClient.user.findFirst({
+               where: {
+                    email
+               }
+          })
+
+
+          if(!user) {
+               res.status(404).json({
+                    msg: 'user not found'
+               })    
+               return 
+          }
+
+          const match = bcrypt.compareSync(password, user.password);
+          if(!match) {
+               res.status(403).json({
+                    massege: 'Not Authorized'
+               })
+               return;
+          }
+
+          const token = jwt.sign({
+               userId : user.id
+          }, JWT_SECRET);
+
+          res.json({
+               token : `Bearer ${token}`
+          })
+          return
+     } catch(e) {
+          res.status(404).json({
+               msg: 'user not found'
+          })
+          return
+     }
 })
 
 app.get('/hi', async (req: Request, res: Response) => {
