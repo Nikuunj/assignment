@@ -19,12 +19,12 @@ model User {
 model SolPublickey {
   userId            String            @id
   user              User              @relation(fields: [userId], references: [id])
-  pubkey            String
+  pubkey            String            @unique
 }
 
 model AkashPublicKey {
   userId           String            @id
   user             User              @relation(fields: [userId], references: [id])
-  address          String
-  pubkey           String
+  address          String            @unique
+  pubkey           String            @unique
 }

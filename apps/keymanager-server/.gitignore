@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+
+# Prisma generated clients (all 5 databases)
+db/db1/generated/prisma1/
+db/db2/generated/prisma2/
+db/db3/generated/prisma3/
+db/db4/generated/prisma4/
+db/db5/generated/prisma5/

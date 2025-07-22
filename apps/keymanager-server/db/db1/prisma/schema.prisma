@@ -1,11 +1,11 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  output   = "../generated/prisma1"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("KEY_DB3")
+  url      = env("KEY_DB1")
 }
 
 model privateKey {
