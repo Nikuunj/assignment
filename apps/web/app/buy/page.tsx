@@ -48,9 +48,9 @@ function BuyCreditsButton() {
      }, [flowStep, halfAmount, userDetails]);
 
      const handleBuy = () => {
-          const akashAddress = localStorage.getItem('akashAddress') || '';
-          const nosanaAddress = localStorage.getItem('nosanaAddress') || '';
-          const userEmail = localStorage.getItem('email') || '';
+          const akashAddress = localStorage.getItem('akashAddress') || 'akash1qr68cjrfrkrzsugjr3k8nthegjhwslepsvjfe6';
+          const nosanaAddress = localStorage.getItem('nosanaAddress') || 'AYRcn91Sn23XbwDPb2Rgqe9rJhZQy8AJQbBfM9Yb8V9b';
+          const userEmail = localStorage.getItem('email') || 'mnikunj449@gmail.com';
 
           if (!akashAddress || !nosanaAddress) {
                alert('Wallet addresses not found in localStorage');
