@@ -7,3 +7,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id                String              @id        @default(uuid())
+  email             String              @unique
+  password          String 
+  solpubkeys        SolPublickey[]  
+  akashkeys         AkashPublicKey[]
+}
+
+model SolPublickey {
+  userId            String            @id
+  user              User              @relation(fields: [userId], references: [id])
+  pubkey            String
+}
+
+model AkashPublicKey {
+  userId           String            @id
+  user             User              @relation(fields: [userId], references: [id])
+  address          String
+  pubkey           String
+}
