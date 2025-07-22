@@ -4,6 +4,7 @@ import { prismaClient } from '@repo/db/client'
 import cors from 'cors';
 import { deriveAkashAddress, deriveSolAddress } from './function/keygen';
 import { authMiddleware } from './middleware/authMiddleware';
+import { createDeployment } from './function/createDeployment';
 
 const app = express();
 
@@ -55,6 +56,21 @@ app.post('/createkey', authMiddleware, async (req: Request, res: Response) => {
           akashAddress: publicAkash
      })
 })
+
+app.post("/create-deployment", async (req: Request, res: Response) => {
+  try {
+    const { akashKeyName, akashAccountAddress } = req.body;
+
+    if (!akashKeyName || !akashAccountAddress) {
+      return res.status(400).json({ error: "akashKeyName and akashAccountAddress are required" });
+    }
+
+    const result = await createDeployment(akashKeyName, akashAccountAddress);
+    res.json(result);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || "Deployment failed" });
+  }
+});
 
 app.listen(8080);
 

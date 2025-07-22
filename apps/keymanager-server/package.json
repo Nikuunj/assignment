@@ -12,7 +12,12 @@
   "keywords": [],
   "author": "",
   "dependencies": {
+    "@akashnetwork/akash-api": "^1.4.0",
+    "@cosmjs/proto-signing": "^0.34.0",
+    "@cosmjs/stargate": "^0.34.0",
     "@types/express": "^5.0.3",
+    "child_process": "^1.0.2",
+    "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "hdkey": "^2.1.0",
     "shamir-secret-sharing": "^0.0.4"

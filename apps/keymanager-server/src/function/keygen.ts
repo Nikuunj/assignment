@@ -33,6 +33,7 @@ export async function deriveAkashAddress(memonicsSeed: Buffer) {
 
      const encodedPub =  bs58.encode(publicKey);
      const [p1, p2, p3, p4, p5] = await split(new Uint8Array(keyPair.privateKey!), 5, 3);
+     
      try {
           await db1.privateKey.create({
                data : {
