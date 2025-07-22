@@ -3,13 +3,12 @@ import { Transak } from '@transak/transak-sdk';
 import { useState, useEffect } from 'react';
 
 enum Environments {
-  DEVELOPMENT = 'DEVELOPMENT',
   STAGING = 'STAGING',
   PRODUCTION = 'PRODUCTION',
 }
 
 function BuyCreditsButton() {
-     const [amount, setAmount] = useState<number>(0);
+     const [amount, setAmount] = useState<number>();
      const [flowStep, setFlowStep] = useState<"idle" | "akash" | "nosana">("idle");
      const [halfAmount, setHalfAmount] = useState<number>(0);
      const [userDetails, setUserDetails] = useState<{
@@ -25,7 +24,7 @@ function BuyCreditsButton() {
                if (flowStep === "akash" && userDetails) {
                const transakNosana = new Transak({
                     apiKey: 'ff42f37d-d475-499e-907a-997cda6f3c29',
-                    environment: Environments.STAGING,
+                    environment: Environments.PRODUCTION,
                     fiatAmount: halfAmount,
                     cryptoCurrencyCode: 'NOS',
                     walletAddress: userDetails.nosanaAddress,
@@ -57,13 +56,16 @@ function BuyCreditsButton() {
                return;
           }
 
+          if(!amount) {
+               return;
+          }
           const splitAmount = amount / 2;
           setHalfAmount(splitAmount);
           setUserDetails({ akashAddress, nosanaAddress, userEmail });
 
           const transakAkash = new Transak({
                apiKey: 'ff42f37d-d475-499e-907a-997cda6f3c29',
-               environment: Environments.STAGING,
+               environment: Environments.PRODUCTION,
                fiatAmount: splitAmount,
                cryptoCurrencyCode: 'AKT',
                walletAddress: akashAddress,

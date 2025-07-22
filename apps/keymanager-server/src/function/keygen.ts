@@ -1,21 +1,12 @@
-import { PrismaClient as prismaClient1 } from '../../db/db1/generated/prisma1'
-import { PrismaClient as prismaClient2 } from '../../db/db2/generated/prisma2'
-import { PrismaClient as prismaClient3 } from '../../db/db3/generated/prisma3' 
-import { PrismaClient as prismaClient4 } from '../../db/db4/generated/prisma4'
-import { PrismaClient as prismaClient5 } from '../../db/db5/generated/prisma5'
 import bs58 from 'bs58'
 import secp256k1 from "secp256k1";
 import { bech32 } from "bech32";
 import hdkey from 'hdkey';
 import crypto from "crypto";
 import { Keypair } from "@solana/web3.js";
-import { split, combine } from 'shamir-secret-sharing';
+import { split } from 'shamir-secret-sharing';
+import { db1, db2, db3, db4, db5 } from '../config/config';
 
-export const db1 = new prismaClient1();
-export const db2 = new prismaClient2();
-export const db3 = new prismaClient3();
-export const db4 = new prismaClient4();
-export const db5 = new prismaClient5();
 
 export async function deriveAkashAddress(memonicsSeed: Buffer) {
      const root = hdkey.fromMasterSeed(memonicsSeed);

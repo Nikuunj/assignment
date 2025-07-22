@@ -5,6 +5,7 @@ import cors from 'cors';
 import { deriveAkashAddress, deriveSolAddress } from './function/keygen';
 import { authMiddleware } from './middleware/authMiddleware';
 import { createDeploymentWithKey } from './function/createDeployment';
+import { getPrivateKey } from './function/getPrivateKey';
 
 
 const app = express();
@@ -59,21 +60,26 @@ app.post('/createkey', authMiddleware, async (req: Request, res: Response) => {
 })
 
 app.post("/akash/create-deployment", async (req: Request, res: Response) => {
-  try {
-    const { akashAccountAddress, publicKey } = req.body;
+     try {
+          const { akashAccountAddress, publicKey } = req.body;
 
-    if (!akashAccountAddress) {
-      return res.status(400).json({ error: "akashAccountAddress are required" });
-    }
+          if (!akashAccountAddress) {
+               return res.status(400).json({ error: "akashAccountAddress are required" });
+          }
 
-    
+          const privateKey = await getPrivateKey(publicKey);
+          if(!privateKey) {
+                    return  res.status(404).json({
+                         msg: 'private key not found'
+                    })
+          }
 
-               // give privatekey of account it make it by usnig combine 5 of 3 key
-    const result = await createDeploymentWithKey('');
-    res.json(result);
-  } catch (err: any) {
-    res.status(500).json({ error: err.message || "Deployment failed" });
-  }
+                         // give privatekey of account it make it by usnig combine 5 of 3 key
+          const result = await createDeploymentWithKey('');
+          res.json(result);
+     } catch (err: any) {
+          res.status(500).json({ error: err.message || "Deployment failed" });
+     }
 });
 
 app.listen(8080);
