@@ -33,7 +33,7 @@ export async function createDeploymentWithKey(privateKeyHex: string) {
     const registry = new Registry(getAkashTypeRegistry());
     const client = await SigningStargateClient.connectWithSigner(AKASH_RPC, wallet, { registry });
 
-    console.log("✅ Connected to Akash as:", address);
+    console.log("Connected to Akash as:", address);
 
     const sdlContent = fs.readFileSync(SDL_PATH, "utf-8");
 
@@ -57,7 +57,7 @@ export async function createDeploymentWithKey(privateKeyHex: string) {
         gas: "200000",
     };
 
-    console.log("📦 Creating deployment...");
+    console.log("Creating deployment...");
     const txCreate: DeliverTxResponse = await client.signAndBroadcast(
         address,
         [msgCreateDeployment],

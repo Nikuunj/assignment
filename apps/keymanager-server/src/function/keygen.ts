@@ -1,4 +1,3 @@
-import bs58 from 'bs58'
 import secp256k1 from "secp256k1";
 import { bech32 } from "bech32";
 import hdkey from 'hdkey';
@@ -21,7 +20,7 @@ export async function deriveAkashAddress(memonicsSeed: Buffer) {
      const words = bech32.toWords(ripemdHash);
 
      const akashAddress = bech32.encode("akash", words);
-
+     const bs58 = (await import('bs58')).default;
      const encodedPub =  bs58.encode(publicKey);
      const [p1, p2, p3, p4, p5] = await split(new Uint8Array(keyPair.privateKey!), 5, 3);
      
@@ -65,7 +64,7 @@ export async function deriveAkashAddress(memonicsSeed: Buffer) {
 }
 
 export async function deriveSolAddress(memonicsSeed: Buffer) {
-     const path = `m/44'/501'/0'/0'`
+     const path = `m/44'/501'/0'/0'` // last 0 change to chnage address it show number of account
      const root = hdkey.fromMasterSeed(memonicsSeed)
      const derived = root.derive(path); 
 
