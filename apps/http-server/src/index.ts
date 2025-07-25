@@ -20,7 +20,7 @@ app.post('/signup', async (req: Request, res: Response) => {
      try {
 
           const hashPass = bcrypt.hashSync(password, 5);
-          prismaClient.user.create({
+          await prismaClient.user.create({
                data: {
                     email,
                     password: hashPass
@@ -106,6 +106,64 @@ app.post('/createwallet', authMiddleware, async (req: Request, res: Response) =>
           res.status(500).json({
                msg: 'somthing wrong'
           })
+     }
+})
+
+
+app.get('/getpulickey', authMiddleware, async (req: Request, res: Response) => {
+     const userId = req.userId;
+
+     if(!userId) {
+          res.status(404).json({
+               msg: "user not authenticated"
+          })
+     }
+
+
+     const publicKeyAkash = await prismaClient.akashPublicKey.findMany({
+          where: {
+               userId
+          }
+     })
+
+     const publicKeySol = await prismaClient.solPublickey.findMany({
+          where: {
+               userId
+          }
+     })
+
+     res.json({
+          akashAddress: publicKeyAkash,
+          solAddress: publicKeySol
+     })
+})
+
+app.post('/create-deployement', authMiddleware, async (req: Request, res: Response) => {
+
+     const { publickeyObj, cloudname } = req.body;
+     // if akash the akash address and public key both other wirse only public key
+
+     const tokenStr = req.headers.authorization ?? "" ;
+     
+     try {
+          
+          const response = await axios.post(`http:localhost:8080/${cloudname}/create-deployment`, publickeyObj , {
+               headers: {
+                    'Authorization': tokenStr
+               }
+          })
+
+          
+           res.json({
+               data: response.data
+          });
+          
+     } catch(e) {
+          res.status(500).json({
+               msg: 'Something went wrong',
+               // @ts-ignore
+               error: e.message || e.toString()
+          });
      }
 })
 

@@ -40,3 +40,12 @@ export default function Page() {
         </div>
     );
 }
+
+// {
+//     "cloudname": "akash",
+//     "publickeyObj" : {
+//         "akashAccountAddress": "akash1agpsczlja62jmq7903q0h7c4kujzga9e9pdfvy", 
+//         "publicKey": "2Bd7vy6NAWxVKG7tb3TugsvqbhvxPSTSDXD8fabviAAH3"
+//     }
+
+// }

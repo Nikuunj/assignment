@@ -112,7 +112,7 @@ app.post("/nosana/create-deployment", authMiddleware, async (req: Request, res: 
           const bs58 = (await import('bs58')).default;
 
           const strPrivateKey = bs58.encode(privateKey)
-          const response = await createNosanaDeployment('4G8erjLdFL6DLhnfsq2522A46TC4HfUQwCpRZr23s5QPFTjkABzDWKTuyVKhXKhPsbJifxwsTvUgT9zDhZyRLnp9');
+          const response = await createNosanaDeployment(strPrivateKey);
           console.log(response);
           
           res.json({

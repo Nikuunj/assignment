@@ -10,7 +10,7 @@ enum Environments {
 function BuyCreditsButton() {
      const [amount, setAmount] = useState<number>();
      const [flowStep, setFlowStep] = useState<"idle" | "akash" | "nosana">("idle");
-     const [halfAmount, setHalfAmount] = useState<number>(0);
+     const [halfAmount, setHalfAmount] = useState<number>(0);    
      const [userDetails, setUserDetails] = useState<{
           akashAddress: string;
           nosanaAddress: string;
